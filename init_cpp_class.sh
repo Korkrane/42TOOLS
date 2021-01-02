@@ -6,7 +6,7 @@
 #    By: bahaas <bahaas@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/12/30 18:33:18 by bahaas            #+#    #+#              #
-#    Updated: 2021/01/02 00:33:51 by bahaas           ###   ########.fr        #
+#    Updated: 2021/01/02 01:13:03 by bahaas           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,14 +23,15 @@ class_creation()
 	CLASS_NAME_MAJ=$(echo ${CLASS_NAME} | tr '[:lower:]' '[:upper:]')
 
 	#create class.hpp file with 42header + define + constructor/destructor
-	vim -c "Stdheader" -c "wq" ${CLASS_NAME}.class.hpp
+	vim -c "Stdheader" -c "wq" ${FILE}
 	sed -i '$ d' ${FILE}
-	echo "#ifndef ${CLASS_NAME_MAJ}_CLASS_HPP\n#define ${CLASS_NAME_MAJ}_CLASS_HPP\nclass ${CLASS_NAME}\n{\n	public:\n		${CLASS_NAME}(void);\n		~${CLASS_NAME}(void);\n};\n#endif" >> ${FILE}
-	
+	echo "#ifndef ${CLASS_NAME_MAJ}_CLASS_HPP\n#define ${CLASS_NAME_MAJ}_CLASS_HPP\n\nclass ${CLASS_NAME}\n{\n	public:\n\n		${CLASS_NAME}(void);\n		~${CLASS_NAME}(void);\n};\n\n#endif" >> ${FILE}
+	echo "#endif" >> ${FILE}
+
 	#create class.cpp file
 	vim -c "Stdheader" -c "wq" ${CLASS_NAME}.class.cpp
 	sed -i '$ d' ${FILE}
-	echo "#include "${CLASS_NAME}.class.hpp >> ${CLASS_NAME}.class.cpp
+	echo "#include \"${FILE}\"" >> ${CLASS_NAME}.class.cpp
 	
 	#display informations
 	echo "The file [${GREEN}${CLASS_NAME}.class.cpp${NC}] & [${BLUE}${CLASS_NAME}.class.hpp${NC}] have been created"
